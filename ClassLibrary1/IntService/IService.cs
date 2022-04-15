@@ -9,7 +9,7 @@ namespace MultiCoreApp.Core.IntService
 {
     public interface IService<T> where T:class
     {
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(Guid id);
         // Asenkron programlama yapmak için Task ifadesi ile başlarız. İçeride trading yapılarım var ve bu birden fazla işlemin aynı anda yürütülmesi anlamına geliyor. Html ayrı bir kanalda database ayrı bir kanalde yükleniyor. Trade işlemde de kaç çekirdek varsa o kadar sayıya bölebiliyor.
 
         Task<IEnumerable<T>> GetAllAsync(); //Soyut olarak kullanıyorum. List dersek ram da oluşturmak zorunda yani fiziksel karşılığını bulmak zorunda.
@@ -25,8 +25,8 @@ namespace MultiCoreApp.Core.IntService
 
         // Update ve delete işleminin asenkron yapıları yoktur.
 
-        Task AddAsync(T entity);
-        Task AddRangeAsync(IEnumerable<T> entities); // Biritek tek ekleme işlemi yaparken diğeri grup halinde yapıyor.
+        Task<T> AddAsync(T entity);
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities); // Biritek tek ekleme işlemi yaparken diğeri grup halinde yapıyor.
 
         T Update(T entity); // T nin anlamı Product verdiysem product tipinde geri dönüş bekliyor anlamına geliyor
 
