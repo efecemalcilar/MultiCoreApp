@@ -3,7 +3,12 @@
 
 using Microsoft.EntityFrameworkCore;
 using MultiCoreApp.Core.IntRepository;
+using MultiCoreApp.Core.IntService;
+using MultiCoreApp.Core.IntUnitOfWork;
 using MultiCoreApp.DataAccessLayer;
+using MultiCoreApp.DataAccessLayer.Repository;
+using MultiCoreApp.DataAccessLayer.UnitOfWork;
+using MultiCoreApp.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);  
 // Add services to the container.
@@ -11,11 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Life Cycle (Alttakiler) ==> iliþkili kodun yaþam süresi , request ile response arasýnda geçen süre (Kodun tetiklenmesi)
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(IRepository<>)); // Request edildiðinde 1 kere Repository oluþtur. Baþlangýcta tek bir iþlem oldugu için scope diðerek bir kere oluþturmasýný istiyorum
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Request edildiðinde 1 kere Repository oluþtur. Baþlangýcta tek bir iþlem oldugu için scope diðerek bir kere oluþturmasýný istiyorum
 
-builder.Services.AddTransient(typeof(IRepository<>), typeof(IRepository<>)); // Repository cagrýlacaksa her seferinde tekrardan cagýr demek. Request ve response arasýnda. Her Defasýnda newleyip yeni veriyle çalýþmak için kullanýyorum.
+builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddSingleton(typeof(IRepository<>), typeof(IRepository<>)); // Koþul ne olursa olsun sadece bir kere olusturacak. Guncellenmeyen bir verim varsa sürekli ayný veriyi çekiyorsam Singleton tercih ederim
+
+/*builder.Services.AddTransient(typeof(IRepository<>), typeof(IRepository<>));*/     // Repository cagrýlacaksa her seferinde tekrardan cagýr demek. Request ve response arasýnda. Her Defasýnda newleyip yeni veriyle çalýþmak için kullanýyorum.
+
+/*builder.Services.AddSingleton(typeof(IRepository<>), typeof(IRepository<>));*/     // Koþul ne olursa olsun sadece bir kere olusturacak. Guncellenmeyen bir verim varsa sürekli ayný veriyi çekiyorsam Singleton tercih ederim
 
 
 builder.Services.AddDbContext<MultiDbContext>(options =>

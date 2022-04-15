@@ -9,7 +9,7 @@ namespace MultiCoreApp.Core.IntRepository
 {
     public interface IProductRepository
     {
-        Task<Product> GetWithCategoryByIdAsync(int proId); //Product id si ile product çekicem ama içinde categoryleride getir demek.
+        Task<Product> GetWithCategoryByIdAsync(Guid proId); //Product id si ile product çekicem ama içinde categoryleride getir demek.
 
 
     }
