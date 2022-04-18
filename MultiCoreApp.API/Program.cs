@@ -10,11 +10,14 @@ using MultiCoreApp.DataAccessLayer.Repository;
 using MultiCoreApp.DataAccessLayer.UnitOfWork;
 using MultiCoreApp.Service.Services;
 
-var builder = WebApplication.CreateBuilder(args);  
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
 //Life Cycle (Alttakiler) ==> iliþkili kodun yaþam süresi , request ile response arasýnda geçen süre (Kodun tetiklenmesi)
+
+
+builder.Services.AddAutoMapper(typeof(Program)); // Amacýmýz kullanacagýmýz servisleri tetiklemek. bu çalýþýnca Automapper aktif hala gelecek. Program.cs in görevi çalýþmasýný istediðimiz þeyleri tetiklemek.
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Request edildiðinde 1 kere Repository oluþtur. Baþlangýcta tek bir iþlem oldugu için scope diðerek bir kere oluþturmasýný istiyorum
 

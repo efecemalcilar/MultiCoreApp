@@ -18,6 +18,7 @@ namespace MultiCoreApp.DataAccessLayer
             
         }
 
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -26,10 +27,11 @@ namespace MultiCoreApp.DataAccessLayer
         {
             var g1 = Guid.NewGuid();
             var g2 = Guid.NewGuid();
+            var g3 = Guid.NewGuid();
 
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             //modelBuilder.Entity<Product>().HasKey(); Böylede yazabilirdim eskiden böyle yazardık ?? 
 
             modelBuilder.ApplyConfiguration(new ProductSeed(new Guid[] {g1, g2}));
