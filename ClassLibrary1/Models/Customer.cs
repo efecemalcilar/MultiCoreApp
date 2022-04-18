@@ -6,14 +6,22 @@ using System.Threading.Tasks;
 
 namespace MultiCoreApp.Core.Models
 {
-    public class Category
+    public class Customer
     {
-        public Guid Id { get; set; } //= Guid.NewGuid();
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public string Address { get; set; }
 
-        public ICollection<Product> Products { get; set; } // Bir ürünün birden fazla product alabildiği için liste halinde veriyoruz.
+        public string Phone { get; set; }
+
+        public string Email { get; set; }
+
+        public string City { get; set; }
+
+        public bool IsDeleted { get; set; }
+        
+
     }
 }
