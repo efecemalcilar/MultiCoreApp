@@ -14,6 +14,8 @@ namespace MultiCoreApp.Core.IntUnitOfWork
 
         ICategoryRepository Category { get; }
 
+        ICustomerRepository Customer { get; }
+
 
 
         Task CommintAsync(); // Savechange işlemim. Add işlemi için bunu kullanırken 

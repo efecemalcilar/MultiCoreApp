@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiCoreApp.API.DTOs;
+using MultiCoreApp.API.Filters;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.Models;
 
 namespace MultiCoreApp.API.Controllers
 {
+    [ValidationFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -34,6 +36,7 @@ namespace MultiCoreApp.API.Controllers
 
 
         }
+        [ServiceFilter(typeof(CategoryNotFoundFilter))] // Bu Filter sadece bunun için calıştır dedik.
 
         [HttpGet("{id:guid}")] //Bu id dışında guid kabul etme
         public async Task<IActionResult> GetById(Guid id)

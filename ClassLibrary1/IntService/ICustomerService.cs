@@ -9,6 +9,6 @@ namespace MultiCoreApp.Core.IntService
 {
     public interface ICustomerService : IService<Customer>
     {
-        Task<Customer> GetCustomerById(Guid cusId);
+        Task<Customer> GetCustomerByIdAsync(Guid cusId);
     }
 }

@@ -5,20 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using MultiCoreApp.Core.IntRepository;
 using MultiCoreApp.Core.IntService;
+using MultiCoreApp.Core.IntUnitOfWork;
 using MultiCoreApp.Core.Models;
 
 namespace MultiCoreApp.Service.Services
 {
-    public class CustomerService : Service<Customer> ,ICustomerService
+    public class CustomerService : Service<Customer>, ICustomerService
     {
-        public CustomerService()
+        public CustomerService(IUnitOfWork unit, IRepository<Customer> repo) : base(unit, repo)
         {
-            
         }
-        
-        
-    }
-    
 
-    
+        public async Task<Customer> GetCustomerByIdAsync(Guid cusId)
+        {
+            return await _unit.Customer.GetWithCustomerByIdAsync(cusId);
+        }
+    }
+
+
+
 }

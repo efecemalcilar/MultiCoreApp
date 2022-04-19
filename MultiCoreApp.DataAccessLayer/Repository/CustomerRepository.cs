@@ -9,7 +9,7 @@ using MultiCoreApp.Core.Models;
 
 namespace MultiCoreApp.DataAccessLayer.Repository
 {
-    public class CustomerRepository:Repository<Customer>,ICustomerRepository
+    public class CustomerRepository : Repository<Customer>,ICustomerRepository
     {
 
         private MultiDbContext multiDbContext {get=> _db as MultiDbContext;}
@@ -19,16 +19,9 @@ namespace MultiCoreApp.DataAccessLayer.Repository
 
         }
 
-        public async Task<Customer> GetWithCustomerByNameAsync(Guid cusId)
+        public async Task<Customer> GetWithCustomerByIdAsync(Guid cusId)
         {
-            var customer = _db.Customers.Include(s => s.Customer).FirstOrDefaultAsync(s => s.Id == cusId);
-
-            return (await customer)!;
+            return (await _db.Customers.Include(s=>s.Name).FirstOrDefaultAsync(s => s.Id == cusId))!;
         }
-
-
-
-
-
     }
 }

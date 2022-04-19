@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MultiCoreApp.API.DTOs
+namespace MultiCoreApp.MVC.DTOs
 {
     public class ProductDto // Kullanıcının göreceği alan olacak.
     {

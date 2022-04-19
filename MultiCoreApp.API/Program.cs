@@ -1,7 +1,10 @@
 //Burasý programýmýn inþaa edildiði yer. SQL mi oracle mi detaylarý burada bulunuyor. 
 
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MultiCoreApp.API.Extensions;
+using MultiCoreApp.API.Filters;
 using MultiCoreApp.Core.IntRepository;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.IntUnitOfWork;
@@ -18,6 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddAutoMapper(typeof(Program)); // Amacýmýz kullanacagýmýz servisleri tetiklemek. bu çalýþýnca Automapper aktif hala gelecek. Program.cs in görevi çalýþmasýný istediðimiz þeyleri tetiklemek.
+
+builder.Services.AddScoped<CategoryNotFoundFilter>(); // Islem calýsýtýnga categorynotfound filter da calýsacak.
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Request edildiðinde 1 kere Repository oluþtur. Baþlangýcta tek bir iþlem oldugu için scope diðerek bir kere oluþturmasýný istiyorum
 
@@ -44,10 +49,19 @@ builder.Services.AddDbContext<MultiDbContext>(options =>
 
 });
 
-builder.Services.AddControllers(); // Burada sadece controller kullanacaðýmý soyluyorum
+builder.Services.AddControllers(o =>
+{
+    o.Filters.Add(new ValidationFilter()); // Validation Filter ý butun controller ýcýne eklemiþ oldum
+
+}); // Burada sadece controller kullanacaðýmý soyluyorum
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer(); //AddPoiint dediði bizim rootumuz. 
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter=true;
+});
 
 var app = builder.Build();
 
@@ -58,6 +72,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCustomException();
 app.UseHttpsRedirection(); // MW iþidir Middle Ware 
 
 app.UseAuthorization(); // Kullanýcý istekde bulundu ben cevap verebilmek için on kontrole ihtiyacým vardýr. Bu kontrol de kullanýcýnýn buna yetkisi var mý yok mu þeklindedir. Bu katman kiþinin yetkili mi yetkisiz mi olduguna karar verdiðimiz katmandýr.

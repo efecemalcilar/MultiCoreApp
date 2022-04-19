@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiCoreApp.API.DTOs;
+using MultiCoreApp.API.Filters;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.Models;
 
@@ -36,12 +37,13 @@ namespace MultiCoreApp.API.Controllers
             return Ok(_mapper.Map<CategoryDto>(pro)); 
 
         }
-
+        [ValidationFilter]
         [HttpPost]//Kayıt
         public async Task<IActionResult> Save(ProductDto proDto)
         {
             var newPro = await _proService.AddAsync(_mapper.Map<Product>(proDto));
-            return Created(string.Empty, _mapper.Map<CategoryDto>(newPro));
+                return Created(string.Empty, _mapper.Map<CategoryDto>(newPro));
+                
         }
 
         [HttpPut] // Update
@@ -63,7 +65,7 @@ namespace MultiCoreApp.API.Controllers
         public IActionResult RemoveByName(string name)
         {
             var pro = _proService.Where(s => s.Name == name).Result;
-            _proService.RemoveRange(pro); 
+            _proService.RemoveRange(pro);
             return NoContent();
         }
 
