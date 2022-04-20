@@ -5,11 +5,23 @@ using MultiCoreApp.Core.IntUnitOfWork;
 using MultiCoreApp.DataAccessLayer;
 using MultiCoreApp.DataAccessLayer.Repository;
 using MultiCoreApp.DataAccessLayer.UnitOfWork;
+using MultiCoreApp.MVC.APISErvices;
 using MultiCoreApp.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddHttpClient<CategoryAPIService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["baseUrl"]);
+});
+
+builder.Services.AddHttpClient<ProductAPIService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["baseUrl"]);
+});
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(Program));
