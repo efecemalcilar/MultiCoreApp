@@ -9,7 +9,7 @@ namespace MultiCoreApp.Core.IntRepository
 {
     public interface ICategoryRepository :IRepository<Category>
     {
-        Task<Category> GetWithProductByIdAsync(int catId);
+        Task<Category> GetWithProductByIdAsync(Guid catId);
 
 
     }

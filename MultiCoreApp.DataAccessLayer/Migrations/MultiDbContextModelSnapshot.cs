@@ -33,11 +33,26 @@ namespace MultiCoreApp.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("tblCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a10f428b-4757-4938-83f9-596490590e0e"),
+                            IsDeleted = false,
+                            Name = "Kalemler"
+                        },
+                        new
+                        {
+                            Id = new Guid("fe205e56-2077-43ef-9158-fe707419def6"),
+                            IsDeleted = false,
+                            Name = "Defterler"
+                        });
                 });
 
             modelBuilder.Entity("MultiCoreApp.Core.Models.Product", b =>
@@ -54,7 +69,8 @@ namespace MultiCoreApp.DataAccessLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -66,7 +82,63 @@ namespace MultiCoreApp.DataAccessLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("tblProducts", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("baa7a1ca-7884-49ec-869d-e4a3f3aa12ee"),
+                            CategoryId = new Guid("a10f428b-4757-4938-83f9-596490590e0e"),
+                            IsDeleted = false,
+                            Name = "Dolma kalem",
+                            Price = 122.53m,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("d02598a3-5ec4-4fc9-8f0c-75a2048f0271"),
+                            CategoryId = new Guid("a10f428b-4757-4938-83f9-596490590e0e"),
+                            IsDeleted = false,
+                            Name = "Tukenmez kalem",
+                            Price = 18.06m,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("770579a3-b04e-4b30-b861-de60ba227c02"),
+                            CategoryId = new Guid("a10f428b-4757-4938-83f9-596490590e0e"),
+                            IsDeleted = false,
+                            Name = "Kursun Kalem",
+                            Price = 62.19m,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("6e30fc04-57dd-4ece-9449-2648e3a7fb8c"),
+                            CategoryId = new Guid("fe205e56-2077-43ef-9158-fe707419def6"),
+                            IsDeleted = false,
+                            Name = "Çizgili Defter",
+                            Price = 22.53m,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("d0bf7fb8-f8d4-491f-b9cf-d3c4c2ef41ea"),
+                            CategoryId = new Guid("fe205e56-2077-43ef-9158-fe707419def6"),
+                            IsDeleted = false,
+                            Name = "Kareli Defter",
+                            Price = 28.06m,
+                            Stock = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("69ff8472-5613-4b08-ac74-cc16398709c5"),
+                            CategoryId = new Guid("fe205e56-2077-43ef-9158-fe707419def6"),
+                            IsDeleted = false,
+                            Name = "Dumduz defter",
+                            Price = 12.19m,
+                            Stock = 0
+                        });
                 });
 
             modelBuilder.Entity("MultiCoreApp.Core.Models.Product", b =>

@@ -9,10 +9,12 @@ namespace MultiCoreApp.Core.IntUnitOfWork
 {
     public interface IUnitOfWork 
     {
-        IProductRepository ProductRepository { get; } // Save işlemi gerçekleşmeden once product repository adında bir alanı doldurmuş oldum.
+        IProductRepository Product { get; } // Save işlemi gerçekleşmeden once product repository adında bir alanı doldurmuş oldum.
         // Bu katman Bir patterndir. Add işlemi ile save işlemni arasında bir aralık var o ara burası oluyor.Amacım unitofwork tetiklenmeden once araya bir sistem sokmak. Bunun core tarafında bir adı var 
 
-        ICategoryRepository CategoryRepository { get; }
+        ICategoryRepository Category { get; }
+
+        ICustomerRepository Customer { get; }
 
 
 
