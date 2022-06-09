@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiCoreApp.API.DTOs;
-using MultiCoreApp.API.Response;
+using MultiCoreApp.Core.Response;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.Models;
 
@@ -24,6 +24,7 @@ namespace MultiCoreApp.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult GetUser()
         {
             IEnumerable<Claim> claims = User.Claims;

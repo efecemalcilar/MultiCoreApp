@@ -4,11 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MultiCoreApp.Core.Models;
+using MultiCoreApp.Core.Response;
 
 namespace MultiCoreApp.Core.IntService
 {
     public interface IUserService:IService<User>
     {
-        User UserFindById(int userId);
+        BaseResponse<User> UserFindById(int userId);
+
+
+
+        BaseResponse<User> AddUser(User user);
+
+        BaseResponse<User> FindByEmailPassword(string email, string password);
+
+        void SaveRefreshToken(int userId,string refreshToken);
+
+        BaseResponse<User> GetUserWithRefreshToken(string refreshToken);
+
+        void RemoveREfreshToken(User user);
+        
+        
     }
 }

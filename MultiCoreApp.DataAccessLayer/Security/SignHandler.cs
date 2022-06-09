@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MultiCoreApp.API.Security
+namespace MultiCoreApp.DataAccessLayer.Security
 {
     public static class SignHandler // Handler lar static olarak eklenir.
     {

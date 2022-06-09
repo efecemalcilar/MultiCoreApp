@@ -21,7 +21,10 @@ namespace MultiCoreApp.API.Mapping
             CreateMap<Product, ProductsWithCategoryDto>();
             CreateMap<ProductsWithCategoryDto, Product>();
 
-            CreateMap<User, UserDto>().ReverseMap();
+
+            //CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }

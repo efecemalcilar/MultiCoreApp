@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MultiCoreApp.API.Extensions;
 using MultiCoreApp.API.Filters;
-using MultiCoreApp.API.Security;
+using MultiCoreApp.DataAccessLayer.Security;
 using MultiCoreApp.Core.IntRepository;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.IntUnitOfWork;

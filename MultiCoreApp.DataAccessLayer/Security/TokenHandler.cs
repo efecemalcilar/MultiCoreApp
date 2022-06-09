@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.Models;
 
-namespace MultiCoreApp.API.Security
+namespace MultiCoreApp.DataAccessLayer.Security
 {
     public class TokenHandler:ITokenHandler
     {
