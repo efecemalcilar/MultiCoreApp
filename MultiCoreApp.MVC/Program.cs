@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using MultiCoreApp.Core.IntRepository;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.Core.IntUnitOfWork;
@@ -7,8 +7,11 @@ using MultiCoreApp.DataAccessLayer.Repository;
 using MultiCoreApp.DataAccessLayer.UnitOfWork;
 using MultiCoreApp.MVC.APISErvices;
 using MultiCoreApp.Service.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -33,12 +36,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<MultiDbContext>(options =>
 {
-    //options nesnemizin içerisini dolduracaz.
+    //options nesnemizin iÃ§erisini dolduracaz.
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConStr"), sqlServerOptionsAction: sqloptions =>
     {
-        sqloptions.EnableRetryOnFailure(); // Bir hata oluþmasý durumunda tekrar tekrar olusturmayý denesin.
-        sqloptions.MigrationsAssembly("MultiCoreApp.DataAccessLayer"); //Migration assembly dosyalarýný arka planda tutacagým yeri soyluyorum.
+        sqloptions.EnableRetryOnFailure(); // Bir hata oluï¿½masï¿½ durumunda tekrar tekrar olusturmayï¿½ denesin.
+        sqloptions.MigrationsAssembly("MultiCoreApp.DataAccessLayer"); //Migration assembly dosyalarï¿½nï¿½ arka planda tutacagï¿½m yeri soyluyorum.
     });
 
 });

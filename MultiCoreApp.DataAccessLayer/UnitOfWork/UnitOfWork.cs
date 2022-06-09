@@ -9,7 +9,7 @@ using MultiCoreApp.DataAccessLayer.Repository;
 
 namespace MultiCoreApp.DataAccessLayer.UnitOfWork
 {
-    public class UnitOfWork:IUnitOfWork
+    public class UnitOfWork:IUnitOfWork //nesne olusmadıysa olustur der.
     {
         private readonly MultiDbContext _db; //Dependcy Injection bu iki satır. 
 
@@ -18,7 +18,9 @@ namespace MultiCoreApp.DataAccessLayer.UnitOfWork
         private CategoryRepository _categoryRepository;
 
         private CustomerRepository _customerRepository;
-        
+
+        private UserRepository _userRepository;
+
         public UnitOfWork(MultiDbContext db)
         {
             _db = db;
@@ -31,7 +33,7 @@ namespace MultiCoreApp.DataAccessLayer.UnitOfWork
         public ICategoryRepository CategoryRepository { get; }
 
         public ICustomerRepository Customer => _customerRepository ??= new CustomerRepository(_db);
-
+        public IUserRepository User => _userRepository ??= new UserRepository(_db);
         public ICustomerRepository CustomerRepository { get; }
 
         public async Task CommintAsync()

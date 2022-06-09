@@ -60,9 +60,9 @@ namespace MultiCoreApp.MVC.APISErvices
             {
                 return null!;
             }
-            {
+            
                 
-            }
+            
         }
 
         public async Task<bool> Update(CategoryDto catDto)

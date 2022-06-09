@@ -1,83 +1,91 @@
-﻿using System.Text;
-using MultiCoreApp.MVC.DTOs;
+﻿using MultiCoreApp.MVC.DTOs;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace MultiCoreApp.MVC.APISErvices
 {
     public class ProductAPIService
     {
         private readonly HttpClient _httpClient;
-
         public ProductAPIService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            IEnumerable<ProductDto> productDtos;
-            var response = await _httpClient.GetAsync("product");
+            IEnumerable<ProductsWithCategoryDto> productDtos;
+            var response = await _httpClient.GetAsync("product"); // api - controllerda verdigim isim neyse o
 
             if (response.IsSuccessStatusCode)
             {
-                productDtos = JsonConvert.DeserializeObject<IEnumerable<ProductDto>>(await response.Content.ReadAsStringAsync())!;
+                productDtos = JsonConvert.DeserializeObject<IEnumerable<ProductsWithCategoryDto>>(await response.Content.ReadAsStringAsync())!;
+
             }
             else
             {
                 productDtos = null;
             }
-
             return productDtos;
+
         }
-
-        public async Task<ProductDto> GetByIdAsync(Guid id)
+        public async Task<ProductsWithCategoryDto> GetByIdAsync(Guid id)
         {
-            
-            var response = await _httpClient.GetAsync($"product/{id}");
-
+            var response = await _httpClient.GetAsync($"Product/{id}");
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ProductDto>(await response.Content.ReadAsStringAsync())!;
+                return JsonConvert.DeserializeObject<ProductsWithCategoryDto>(await response.Content.ReadAsStringAsync())!;
             }
             else
             {
-                return null;
+                return null!;
             }
 
         }
-
-        public async Task<ProductDto> AddAsync(ProductDto productDto)
+        public async Task<ProductsWithCategoryDto> AddAsync(ProductsWithCategoryDto proDto)
         {
-            var stringContent = new StringContent(JsonConvert.SerializeObject(productDto), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(proDto), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("product", stringContent);
-            
             if (response.IsSuccessStatusCode)
             {
-                productDto = JsonConvert.DeserializeObject<ProductDto>(await response.Content.ReadAsStringAsync())!;
-                return productDto;
+                proDto = JsonConvert.DeserializeObject<ProductsWithCategoryDto>(await response.Content.ReadAsStringAsync())!;
+                return proDto;
+
             }
             else
             {
                 return null!;
             }
         }
-
-        public async Task<bool> Update(ProductDto proDto)
+        public async Task<bool> Update(ProductsWithCategoryDto proDto)
         {
             var stringContent = new StringContent(JsonConvert.SerializeObject(proDto), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"product/{proDto.Id}", stringContent);
-
+            var response = await _httpClient.PutAsync($"product", stringContent);
             if (response.IsSuccessStatusCode)
             {
                 return true;
+
             }
             else
             {
                 return false;
             }
+        }
+        public async Task<IEnumerable<ProductsWithCategoryDto>> GetAllWithCategoryAsync()
+        {
+            IEnumerable<ProductsWithCategoryDto> proDtos;
+            var response = await _httpClient.GetAsync("product/categoryall"); // api - controllerda verdigim isim neyse o
+
+            if (response.IsSuccessStatusCode)
             {
-                
+                proDtos = JsonConvert.DeserializeObject<IEnumerable<ProductsWithCategoryDto>>(await response.Content.ReadAsStringAsync())!;
+
             }
+            else
+            {
+                proDtos = null;
+            }
+            return proDtos;
+
         }
     }
 }

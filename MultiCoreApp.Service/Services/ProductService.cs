@@ -20,5 +20,10 @@ namespace MultiCoreApp.Service.Services
         {
             return await _unit.Product.GetWithCategoryByIdAsync(proId);
         }
+
+        public async Task<IEnumerable<Product>> GetAllWithCategoryAsync()
+        {
+            return await _unit.Product.GetAllWithCategoryAsync();
+        }
     }
 }

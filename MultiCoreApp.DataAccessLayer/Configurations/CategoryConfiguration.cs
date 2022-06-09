@@ -9,7 +9,7 @@ using MultiCoreApp.Core.Models;
 
 namespace MultiCoreApp.DataAccessLayer.Configuration
 {
-    public class CategoryConfiguration :IEntityTypeConfiguration<Category> //Configuration dosyalarını ekleyebilmek için bu sınıfı çağırmam gerek. Entity Category bu yaptığım fluent yapidir. 
+    public class CategoryConfiguration :IEntityTypeConfiguration<Category> //Configuration dosyalarını ekleyebilmek için bu sınıfı çağırmam gerek. Entity Category bu yaptığım fluent apidir. Entity de olusturdugumuz tabloların özellıklerını belirttik.
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {

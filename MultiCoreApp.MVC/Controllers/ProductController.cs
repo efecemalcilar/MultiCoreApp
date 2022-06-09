@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MultiCoreApp.Core.IntService;
 using MultiCoreApp.MVC.APISErvices;
 using MultiCoreApp.MVC.DTOs;
@@ -8,56 +9,66 @@ namespace MultiCoreApp.MVC.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _productService;
-        private readonly ProductAPIService _productAPIService;
-        private readonly IMapper _mapper;
-
-        public ProductController(IProductService productService, ProductAPIService productApiService, IMapper mapper)
+        
+        private readonly ProductAPIService _proApiService;
+        private readonly CategoryAPIService _catApiService;
+        private readonly IMapper _iMapper;
+        public ProductController( ProductAPIService productApiService, IMapper imapper, CategoryAPIService categoryApiService)
         {
-            _productService = productService;
-            _productAPIService = productApiService;
-            _mapper = mapper;
+            _proApiService = productApiService;
+            _iMapper = imapper;
+            _catApiService = categoryApiService;
         }
-
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductDto> pro = await _productAPIService.GetAllAsync();
+            var pro = await _proApiService.GetAllWithCategoryAsync();
             return View(pro);
         }
-
         public async Task<IActionResult> Details(Guid id)
         {
-            var catDto =
-                await _productAPIService.GetByIdAsync(id); //Categoryden category service e gitsin getbyid çalıştırsın
-            return View(catDto);
+            var proDto = await _proApiService.GetByIdAsync(id);
+            return View(proDto);
         }
-
         public IActionResult Create()
         {
+            var cat = _catApiService.GetAllAsync().Result;
+            ViewData["CategoryId"] = new SelectList(cat, "Id", "Name");
             return View();
         }
-
         [HttpPost]
-        public async Task<IActionResult> Create(ProductDto productDto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ProductsWithCategoryDto proDto)
         {
-            await _productAPIService.AddAsync(productDto);
+            if (ModelState.IsValid)
+            {
+                await _proApiService.AddAsync(proDto);
+                return RedirectToAction("Index");
+            }
+            ViewData["CategoryId"] = new SelectList(_catApiService.GetAllAsync().Result, "Id", "Name", proDto.CategoryId);
 
-            return RedirectToAction("Index");
+            return View(proDto);
+
+
         }
-
-        public async Task<IActionResult>
-            Update(Guid id) //guncelleme yapmam ıcın once guncelleyeceğim kaydı bulmam gerekiyor.
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var cat = await _productAPIService.GetByIdAsync(id);
-            return View(cat);
+            var proDto = await _proApiService.GetByIdAsync(id);
+            ViewData["CategoryId"] = new SelectList(_catApiService.GetAllAsync().Result, "Id", "Name", proDto.CategoryId);
+            return View(proDto);
         }
-
         [HttpPost]
-
-        public async Task<IActionResult> Update(ProductDto proDto)
+        public async Task<IActionResult> Edit(ProductsWithCategoryDto proDto)
         {
-            await _productAPIService.Update(proDto);
-            return RedirectToAction("Index");
+            ModelState.Remove("Category");
+            if (ModelState.IsValid)
+            {
+                await _proApiService.Update(proDto);
+                return RedirectToAction("Index");
+            }
+            ViewData["CategoryId"] = new SelectList(_catApiService.GetAllAsync().Result, "Id", "Name", proDto.CategoryId);
+            return View(proDto);
+
         }
+
     }
 }

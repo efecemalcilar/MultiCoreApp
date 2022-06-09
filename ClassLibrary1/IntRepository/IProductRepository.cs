@@ -7,9 +7,12 @@ using MultiCoreApp.Core.Models;
 
 namespace MultiCoreApp.Core.IntRepository
 {
-    public interface IProductRepository
+    public interface IProductRepository :IRepository<Product>
     {
         Task<Product> GetWithCategoryByIdAsync(Guid proId); //Product id si ile product çekicem ama içinde categoryleride getir demek.
+
+        Task<IEnumerable<Product>> GetAllWithCategoryAsync();
+
 
 
     }

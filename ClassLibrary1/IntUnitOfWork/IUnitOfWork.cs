@@ -16,6 +16,8 @@ namespace MultiCoreApp.Core.IntUnitOfWork
 
         ICustomerRepository Customer { get; }
 
+        IUserRepository User { get; } //Modifiye etmek istemediğim için get alıyorum , sadece bilgi cekicem.
+
 
 
         Task CommintAsync(); // Savechange işlemim. Add işlemi için bunu kullanırken 
