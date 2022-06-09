@@ -9,6 +9,8 @@ namespace MultiCoreApp.Core.IntService
 {
     public interface IProductService :IService<Product>
     {
-        Task<Product> GetWithCategoryByIdAsync(int proId);
+        Task<Product> GetWithCategoryByIdAsync(Guid proId);
+
+        Task<IEnumerable<Product>> GetAllWithCategoryAsync();
     }
 }
